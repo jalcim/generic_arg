@@ -1,27 +1,24 @@
-#include <sys/mman.h>
+#include <stdlib.h>
 #include <string.h>
-
+#include <stdio.h>
 #include "../include/wrap.h"
+#include "../include/tools.h"
 
 int test_strcat_basic()
 {
-  void *arg;
+  void **arg;
   char *str1, *str2;
   int ret;
-  
-  arg = mmap(0, 4096, PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
-  str1 = ((char **)arg)[0] = mmap(0, 100, PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
-  str2 = ((char **)arg)[1] = mmap(0, 100, PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
-  
+
+  str1 = malloc(100);
   strcpy(str1, "salut");
-  strcpy(str2, " ca couille ?");
+  str2 = strdup(" ca couille ?");
+
+  arg = make_arg(2, str1, str2);
   wrap_strcat(arg);
-  ret = 0;
-  if (strcmp(str1, "salut ca couille ?"))
-    ret = -1;
-  munmap(((char **)arg)[0], 100);
-  munmap(((char **)arg)[1], 100);
-  munmap(arg, 4096);
+
+  free(str2);
+  ret = strcmp(str1, "salut ca couille ?");
+  free(str1);
   return (ret);
 }
-
