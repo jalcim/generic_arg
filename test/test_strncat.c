@@ -6,7 +6,6 @@
 
 int test_strncat_basic()
 {
-  void **arg;
   char *str1, *str2;
   int len;
   int ret;
@@ -16,8 +15,7 @@ int test_strncat_basic()
   str2 = strdup(" ca couille ?");
   len = 3;
 
-  arg = make_arg(3, str1, str2, &len);
-  wrap_strncat(arg);
+  wrap_strncat(NULL, str1, str2, len);
 
   free(str2);
   ret = strcmp(str1, "salut ca");

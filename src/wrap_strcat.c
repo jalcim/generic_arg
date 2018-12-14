@@ -1,12 +1,14 @@
-#include <sys/mman.h>
-#include <stdio.h>
+#include <stdarg.h>
 #include <string.h>
 
-void *wrap_strcat(void **arg)
+void *wrap_strcat(char *fmt, ...)
 {
+  va_list ap;
   char *str1, *str2;
 
-  str1 = (char *)arg[0];
-  str2 = (char *)arg[1];
+  va_start(ap, fmt);
+  str1 = va_arg(ap, char *);
+  str2 = va_arg(ap, char *);
+  va_end(ap);
   return (strcat(str1, str2));
 }

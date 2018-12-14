@@ -1,7 +1,7 @@
 #ifndef __WRAP_H__
 #define __WRAP_H__
 
-void *wrap_strcat(void **fct);
-void *wrap_strncat(void **fct);
+void *wrap_strcat(char *fmt, ...);
+void *wrap_strncat(char *fmt, ...);
 
 #endif

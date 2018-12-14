@@ -1,14 +1,17 @@
+#include <stdarg.h>
 #include <string.h>
-#include <stdlib.h>
 
-void *wrap_strncat(void **arg)
+
+void *wrap_strncat(char *fmt, ...)
 {
+  va_list ap;
   char *str1, *str2;
-  int *len;
+  int len;
 
-  str1 = (char *)arg[0];
-  str2 = (char *)arg[1];
-  len = (int *)arg[2];
-  free(arg);
-  return (strncat(str1, str2, *len));
+  va_start(ap, fmt);
+  str1 = va_arg(ap, char *);
+  str2 = va_arg(ap, char *);
+  len = va_arg(ap, int);
+  va_end(ap);
+  return (strncat(str1, str2, len));
 }

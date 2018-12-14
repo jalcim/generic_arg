@@ -6,7 +6,6 @@
 
 int test_strcat_basic()
 {
-  void **arg;
   char *str1, *str2;
   int ret;
 
@@ -14,8 +13,7 @@ int test_strcat_basic()
   strcpy(str1, "salut");
   str2 = strdup(" ca couille ?");
 
-  arg = make_arg(2, str1, str2);
-  wrap_strcat(arg);
+  wrap_strcat(NULL, str1, str2);
 
   free(str2);
   ret = strcmp(str1, "salut ca couille ?");
